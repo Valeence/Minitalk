@@ -6,16 +6,19 @@
 /*   By: vandre <vandre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 03:57:14 by vandre            #+#    #+#             */
-/*   Updated: 2023/12/13 04:07:57 by vandre           ###   ########.fr       */
+/*   Updated: 2023/12/13 19:24:13 by vandre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
+int	g_a;
+
 void	send_msg(int pid, char *str)
 {
 	int		i;
 	int		j;
+	char	c;
 
 	i = 0;
 	while (str[i])
@@ -23,19 +26,18 @@ void	send_msg(int pid, char *str)
 		j = 0;
 		while (j < 8)
 		{
-			if (str[i] & (1 << j))
-			{
-				printf("1");
+			c = (str[i] >> j) & 1;
+			if (c == 1)
 				kill(pid, SIGUSR1);
-			}
 			else
-			{	
-				printf("0");
 				kill(pid, SIGUSR2);
-			}
+			usleep(100);
+			j++;
+			while (g_a == 0)
+				pause();
 		}
+		i++;
 	}
-
 }
 
 void	signal_handler_client(int signal, siginfo_t *info, void *context)
