@@ -6,7 +6,14 @@
 /*   By: vandre <vandre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 03:57:20 by vandre            #+#    #+#             */
-/*   Updated: 2023/12/10 03:57:21 by vandre           ###   ########.fr       */
+/*   Updated: 2023/12/13 03:50:01 by vandre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minitalk.h"
+
+int    main(void)
+{
+    ft_printf("%d\n", getpid());
+    return (0);
+}

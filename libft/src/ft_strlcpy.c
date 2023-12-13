@@ -6,7 +6,7 @@
 /*   By: vandre <vandre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:17:53 by vandre            #+#    #+#             */
-/*   Updated: 2023/12/05 16:54:12 by vandre           ###   ########.fr       */
+/*   Updated: 2023/11/12 14:49:35 by vandre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
 	size_t	i;
 
-	if (!src || !dst)
-		return (0);
 	i = 0;
 	if (size > 0)
 	{
