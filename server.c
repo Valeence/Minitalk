@@ -6,44 +6,38 @@
 /*   By: vandre <vandre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 03:57:20 by vandre            #+#    #+#             */
-/*   Updated: 2023/12/13 19:37:00 by vandre           ###   ########.fr       */
+/*   Updated: 2023/12/15 04:50:02 by vandre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
+#define END_TRANSMISSION '\0'
 
-void	signal_handler_client(int signal, siginfo_t *info, void *context)
+void	handle_signal(int signal)
 {
-	int		bit_index;
-	char	c;
+	static unsigned char	current_char;
+	static int				bit_index;
 
-	bit_index = 0;
-	c = 0;
-	(void)context;
-	if (signal == SIGUSR1)
-		c = (c << 1) | 1;
-	else if (signal == SIGUSR2)
-		c <<= 1;
+	current_char |= (signal == SIGUSR1);
 	bit_index++;
 	if (bit_index == 8)
 	{
-		ft_printf("%c", c);
+		if (current_char == END_TRANSMISSION)
+			ft_printf("\n");
+		else
+			ft_printf("%c", current_char);
 		bit_index = 0;
-		c = 0;
+		current_char = 0;
 	}
-	kill(info->si_pid, SIGUSR1);
+	else
+		current_char <<= 1;
 }
 
 int	main(void)
 {
-	struct sigaction	act;
-
 	ft_printf("%d\n", getpid());
-
-	act.sa_sigaction = signal_handler_client;
-	act.sa_flags = SA_SIGINFO;
-	sigemptyset(&act.sa_mask);
-	sigaction(SIGUSR1, &act, NULL);
+	signal(SIGUSR1, handle_signal);
+	signal(SIGUSR2, handle_signal);
 	while (1)
 		pause();
 	return (0);
