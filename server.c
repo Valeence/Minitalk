@@ -6,7 +6,7 @@
 /*   By: vandre <vandre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 03:57:20 by vandre            #+#    #+#             */
-/*   Updated: 2023/12/16 21:22:48 by vandre           ###   ########.fr       */
+/*   Updated: 2023/12/16 22:10:44 by vandre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	ft_putnbr_fd(int n, int fd)
 	if (nbr > 9)
 		ft_putnbr_fd(nbr / 10, fd);
 	ft_putchar_fd(nbr % 10 + '0', fd);
-
 }
 
 void	handle_signal(int signal, siginfo_t *info, void *context)

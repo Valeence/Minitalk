@@ -6,7 +6,7 @@
 /*   By: vandre <vandre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 03:57:14 by vandre            #+#    #+#             */
-/*   Updated: 2023/12/16 21:18:51 by vandre           ###   ########.fr       */
+/*   Updated: 2023/12/16 22:11:17 by vandre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void handle_read_receipt(int signal)
 {
 	if (signal == SIGUSR1)
 		write(1, "message received\n", 17);
-
 }
 
 int	main(int argc, char *argv[])
@@ -70,6 +69,7 @@ int	main(int argc, char *argv[])
 	int			i;
 
 	signal(SIGUSR1, handle_read_receipt);
+	signal(SIGUSR2, handle_read_receipt);
 	if (argc != 3)
 	{
 		write(1, "Usage: ./client [pid] [string]\n", 31);
