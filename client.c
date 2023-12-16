@@ -6,17 +6,43 @@
 /*   By: vandre <vandre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 03:57:14 by vandre            #+#    #+#             */
-/*   Updated: 2023/12/15 04:02:43 by vandre           ###   ########.fr       */
+/*   Updated: 2023/12/16 21:18:51 by vandre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
+int	ft_atoi(const char *str)
+{
+	long			res;
+	long			sign;
+	unsigned int	i;
+
+	res = 0;
+	sign = 1;
+	i = 0;
+	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n'
+		|| str[i] == '\r' || str[i] == '\v' || str[i] == '\f')
+		i++;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			sign = -1;
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		res = res * 10 + str[i] - '0';
+		i++;
+	}
+	return ((int)(res * sign));
+}
+
 void	send_signal(int pid, unsigned char c)
 {
 	int				i;
 	unsigned char	temp_char;
-
+	
 	i = 8;
 	temp_char = c;
 	while (i > 0)
@@ -27,8 +53,15 @@ void	send_signal(int pid, unsigned char c)
 			kill(pid, SIGUSR2);
 		else
 			kill(pid, SIGUSR1);
-		usleep(42);
+		usleep(420);
 	}
+}
+
+void handle_read_receipt(int signal)
+{
+	if (signal == SIGUSR1)
+		write(1, "message received\n", 17);
+
 }
 
 int	main(int argc, char *argv[])
@@ -36,9 +69,10 @@ int	main(int argc, char *argv[])
 	const char	*str;
 	int			i;
 
+	signal(SIGUSR1, handle_read_receipt);
 	if (argc != 3)
 	{
-		ft_printf("Usage:./client <pid> <message>\n");
+		write(1, "Usage: ./client [pid] [string]\n", 31);
 		exit(0);
 	}
 	str = argv[2];
