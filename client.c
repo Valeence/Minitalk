@@ -6,7 +6,7 @@
 /*   By: vandre <vandre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 03:57:14 by vandre            #+#    #+#             */
-/*   Updated: 2023/12/16 22:11:17 by vandre           ###   ########.fr       */
+/*   Updated: 2023/12/17 22:28:41 by vandre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	send_signal(int pid, unsigned char c)
 			kill(pid, SIGUSR2);
 		else
 			kill(pid, SIGUSR1);
-		usleep(420);
+		usleep(1000);
 	}
 }
 
